@@ -10,11 +10,13 @@ public class BattleSequenceBase {
 	Army army2;
 	final int totalTroopTypes = 2;
 	
-	BattleSequenceBase() {
+	public BattleSequenceBase() {
 		System.out.println("Start Battle");
 		
 		army1 = new Army(15,5);
 		army2 = new Army(10,10);
+		
+		this.round();
 	}
 	
 	protected void round() {
@@ -38,7 +40,6 @@ public class BattleSequenceBase {
 	protected void inflictDamage(int damage, Army otherArmy) {
 		for(int i=0; i < damage; i++) {
 			int decision = Helpers.getRandomInt(this.totalTroopTypes);
-			
 			if(decision == 1) {
 				otherArmy.killSpear();
 			} else if(decision == 2) {
