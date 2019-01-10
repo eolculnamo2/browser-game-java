@@ -19,9 +19,9 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 @EnableWebMvc
 @ComponentScan(basePackages="com.game")
 public class AppConfig implements WebMvcConfigurer {
-//	 public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-//	    registry.addResourceHandler("/bundle/**").addResourceLocations("/WEB-INF");
-//	}
+	 public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+	    registry.addResourceHandler("/assets/dist/**").addResourceLocations("/WEB-INF");
+	}
 	
 	// equivalent for <mvc:default-servlet-handler/> tag
 
@@ -30,7 +30,7 @@ public class AppConfig implements WebMvcConfigurer {
 	@Description("Thymeleaf Template Resolver")
 	public ServletContextTemplateResolver templateResolver(ServletContext servletContext) {
 	    ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
-	    templateResolver.setPrefix("/WEB-INF/");
+	    templateResolver.setPrefix("/WEB-INF/public/");
 	    templateResolver.setSuffix(".html");
 	    templateResolver.setTemplateMode("HTML5");
 	 
