@@ -1,24 +1,22 @@
 package com.game.troops;
 
-public class Spearmen implements Troops {
-	
+public class HeavySwords implements Troops{
 	public int getAttack() {
-		return 1;
-	}
-	public int getArmor() {
-		return 0;
-	}
-	public int getSpeed() {
 		return 3;
-	}
+	};
+	public int getArmor() {
+		return 3;
+	};
+	public int getSpeed() {
+		return 2;
+	};
 	public int getLoot() {
-		return 4;
-	}
+		return 2;
+	};
 	public double getHealth() {
-		return baseHealth;
-	}
+		return baseHealth * 1.5;
+	};
 	public int getBattlePosition() {
-		return 1;
-	}
-	
+		return 2;
+	};
 }

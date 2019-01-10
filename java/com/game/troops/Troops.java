@@ -6,6 +6,6 @@ public interface Troops {
 	public int getArmor();
 	public int getSpeed();
 	public int getLoot();
-	public int getHealth();
+	public double getHealth();
 	public int getBattlePosition();
 }
