@@ -18,10 +18,36 @@ const troops = [
 ]
 
 class Troops extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            unitType: "",
+            amount: 0
+        }
+        this.makePurchase = this.makePurchase.bind(this);
+    }
+
+    makePurchase(unitType, amount) {
+        const payload = { unitType, amount }
+
+        fetch('/purchase-troops',{
+            method: "POST",
+            body: JSON.stringify(payload),
+            headers: { "Content-Type": "application/json" },
+            credentials: "same-origin"
+            })
+        .then( res => res.json() )
+        .then( data => {
+            alert("You purchased " + data.amount + " "+data.unitType);
+        });
+    }
+
     render() {
         return (
             <div className="Troops">
-                {troops.map( x => <UnitPurchase description={ x.description } name={ x.name }/> )}
+                {troops.map( x => <UnitPurchase  description={ x.description } 
+                                                 makePurchase={ this.makePurchase} 
+                                                 name={ x.name }/> )}
             </div>
         )
     }
