@@ -1,5 +1,11 @@
 @import './globals.scss';
 
 body{
-    background: $test;
+    margin: 0;
+    background: $grain;
+    font-size: 14px;
+    //set font size to scale em values globally
+    @media (min-width: 800px) {
+        font-size: 16px;
+    }
 }

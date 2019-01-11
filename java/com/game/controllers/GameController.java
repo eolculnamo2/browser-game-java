@@ -8,9 +8,9 @@ import com.game.battle.BattleSequence;
 @Controller
 public class GameController {
 
-	@GetMapping("/")
+	@GetMapping("*")
 	public String home() {
-		new BattleSequence();
+//		new BattleSequence();
 		return "index";
 	}
 }

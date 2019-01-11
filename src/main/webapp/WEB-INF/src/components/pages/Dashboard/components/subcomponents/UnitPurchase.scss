@@ -1,0 +1,36 @@
+@import '../../../../../globals.scss';
+
+.UnitPurchase {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid $grain;
+}
+
+.UnitPurchase-button {
+    display: block;
+    margin: 1em 0;
+    border: 0;
+    border-radius: 2px;
+    padding: .5em 1em;
+    background: $lightGray;
+    cursor: pointer;
+
+    &:hover {
+        background: $tan;
+    }
+}
+
+.UnitPurchase-input {
+    width: 7em;
+    padding: .35em .75em;
+    border-radius: 3px;
+}
+
+.UnitPurchase-description-container {
+    width: 100%;
+}
+
+.UnitPurchase-description {
+    padding: 0 1em 0 4em;
+}

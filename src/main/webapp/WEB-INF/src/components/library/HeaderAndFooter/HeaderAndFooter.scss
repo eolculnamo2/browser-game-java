@@ -1,0 +1,39 @@
+@import '../../../globals.scss';
+
+.Header {
+    top: 0;
+    left: 0;
+    background: $blackboard;
+    max-width: 100%;
+}
+
+.Header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+    padding: 1em 3em;
+    font-weight: 600;
+    color: $lightGray;
+}
+
+.Header-menu-flex {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1em;
+    flex-direction: column;
+    list-style-type: none;
+
+    li {
+        cursor: pointer;
+        &:hover {
+            color: $oxblood;
+        }
+    }
+
+    @media (min-width: $breakpoint1) {
+        flex-direction: row;
+        width: 40vw;
+    }
+
+}
