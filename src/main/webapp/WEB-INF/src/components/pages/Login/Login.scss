@@ -1,0 +1,40 @@
+@import '../../../globals.scss';
+
+.Login-flex-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.Login-body {
+    border-radius: 3px;
+    border: 4px solid $blackboard;
+    background: $oxblood;
+    color: $lightGray;
+    padding: 1em 2em;
+    margin-top: 3em;
+    width: 80vw;
+
+    @media (min-width: $breakpoint1) {
+        width: 30vw;
+    }
+}
+
+.Login-change-view-link {
+    color: $tan;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.Login-button {
+    padding: 1em 2em;
+    background: $lightGray;
+    display: block;
+    margin: .5em 0;
+    cursor: pointer;
+
+    &:hover {
+        background: $oxblood;
+        color: $lightGray;
+    }
+}

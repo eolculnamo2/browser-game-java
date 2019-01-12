@@ -4,6 +4,8 @@ body{
     margin: 0;
     background: $grain;
     font-size: 14px;
+    max-width: 100vw;
+    overflow-x: hidden;
     //set font size to scale em values globally
     @media (min-width: 800px) {
         font-size: 16px;

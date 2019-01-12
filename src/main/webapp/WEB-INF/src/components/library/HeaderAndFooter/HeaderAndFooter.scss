@@ -27,7 +27,8 @@
     li {
         cursor: pointer;
         &:hover {
-            color: $oxblood;
+            color: $grain;
+            text-decoration: underline;
         }
     }
 

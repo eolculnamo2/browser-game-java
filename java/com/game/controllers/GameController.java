@@ -2,8 +2,6 @@ package com.game.controllers;
 
 import java.io.IOException;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -17,6 +15,7 @@ import com.game.army.TroopData;
 import com.game.battle.BattleSequence;
 import com.game.helpers.Helpers;
 import com.game.models.CreateUserProfile;
+import com.game.models.ReadUserProfile;
 import com.game.models.UserProfile;
 
 @Controller
@@ -51,7 +50,7 @@ public class GameController {
 	}
 	
 	@PostMapping("/create-profile")
-	public void createUser(HttpServletRequest request) throws IOException {
+	public String createUser(HttpServletRequest request) throws IOException {
 		String profileData = Helpers.convertJsonToString( request.getInputStream() );
 		ObjectMapper objectMapper = new ObjectMapper();
 		UserProfile newProfile = objectMapper.readValue(profileData, UserProfile.class);
@@ -70,8 +69,20 @@ public class GameController {
 				              newProfile.getSteel());
 		
 		System.out.println("Profile Created");
-		
-
+		return "Profile Created";
 	}
 	
+	@PostMapping("/login")
+	public String authenticateUser(HttpServletRequest request, Model model) {
+		String loginData = Helpers.convertJsonToString( request.getInputStream() );
+		ObjectMapper objectMapper = new ObjectMapper();
+		UserProfile profile = objectMapper.readValue(loginData, UserProfile.class);
+		
+		
+		//UserProfile authenticatedProfile = new ReadUserProfile(profile.getUsername(), profile.getPassword());
+		
+		//Will add user date to the model
+		//model.addAttribute("user", user)
+		return "Success";
+	}
 }
