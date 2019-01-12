@@ -1,5 +1,7 @@
 package com.game.army;
 
+import java.util.Map;
+
 public interface ArmyInterface {
 
 	public int getTotal();
@@ -15,7 +17,7 @@ public interface ArmyInterface {
 	public void killHeavySwords();
 	public int getHeavySwords();
 	
-	public int getRemainingTroopTypes();
+	public Map<String, Boolean> getRemainingTroopTypes();
 	
 	public void setTotalAttack(int attack);
 	

@@ -1,23 +1,33 @@
 package com.game.battle;
 
+import java.util.Map;
+
 import com.game.army.Army;
+import com.game.army.TroopData;
 import com.game.helpers.Helpers;
 import com.game.troops.Archers;
+import com.game.troops.HeavySwords;
 import com.game.troops.Spearmen;
 
 public class BattleSequence {
 	Army attacker;
 	Army defender;
 
-	public BattleSequence() {
+	public BattleSequence(TroopData attackData, TroopData defendData) {
 		System.out.println("Start Battle");
 		
-		attacker = new Army(15,5,2);
-		defender = new Army(10,10,2);
+		attacker = new Army(attackData.getSpearmen(),
+							attackData.getArchers(),
+							attackData.getHeavySwords());
+		
+		defender = new Army(defendData.getSpearmen(),
+							defendData.getArchers(),
+							defendData.getHeavySwords());
+		
 		int roundNumber = 1;
 		
 		//Max 3 rounds OR when one army is out of troops;
-		while(roundNumber < 3 || (attacker.getTotal() != 0 && defender.getTotal() !=0)) {
+		while(roundNumber < 3 && (attacker.getTotal() != 0 && defender.getTotal() !=0)) {
 			this.round();
 			roundNumber++;
 		}
@@ -55,15 +65,18 @@ public class BattleSequence {
 	}
 	
 	private void inflictDamage(int damage, Army otherArmy) {
-		int troopTypesLeft = otherArmy.getRemainingTroopTypes();
+		Map<String, Boolean> troopsLeft = otherArmy.getRemainingTroopTypes();
+		//There's probably a better way to do this...
 		for(int i=0; i < damage; i++) {
-			int decision = Helpers.getRandomInt(troopTypesLeft);
-			if(decision == 1) {
+			int decision = Helpers.getRandomInt(troopsLeft.size());
+			if(decision == 1 && troopsLeft.get("spearmen").equals(true)) {
 				otherArmy.killSpear();
-			} else if(decision == 2) {
+			} else if(decision == 2 && troopsLeft.get("archers").equals(true)) {
 				otherArmy.killArcher();
-			} else if (decision == 3) {
+			} else if (decision == 3 && troopsLeft.get("heavySwords").equals(true)) {
 				otherArmy.killHeavySwords();
+			} else {
+				i--;
 			}
 		}
 	}
@@ -78,9 +91,11 @@ public class BattleSequence {
 	private int makeTotalAttack(Army army) {
 		Spearmen spears = new Spearmen();
 		Archers archers = new Archers();
+		HeavySwords heavySwords = new HeavySwords();
 		
 		int spearsAttack = spears.getAttack() * army.getSpears();
 		int archersAttack = archers.getAttack() * army.getArchers();
+		int heavySwordsAttack = heavySwords.getAttack() * army.getHeavySwords();
 		
 		return spearsAttack + archersAttack;
 	}
@@ -88,11 +103,14 @@ public class BattleSequence {
 	private int makeTotalDefense(Army army) {
 		Spearmen spears = new Spearmen();
 		Archers archers = new Archers();
+		HeavySwords heavySwords = new HeavySwords();
+		
 		
 		int spearsDefense = spears.getArmor() * army.getSpears();
 		int archersDefense = archers.getArmor() * army.getArchers();
+		int heavySwordsDefense = heavySwords.getArmor() * army.getHeavySwords();
 		
-		return spearsDefense + archersDefense;
+		return spearsDefense + archersDefense + heavySwordsDefense;
 	}
 	
 }

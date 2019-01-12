@@ -1,5 +1,8 @@
 package com.game.army;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Army implements ArmyInterface {
 	
 	private int totalSpears;
@@ -10,7 +13,6 @@ public class Army implements ArmyInterface {
 	private int totalDefense;
 	
 	public Army(int spears, int archers, int heavySwords) {
-		System.out.println("Army called.");
 		this.totalSpears += spears;
 		this.totalArchers += archers;
 		this.totalHeavySwords += heavySwords;
@@ -55,20 +57,14 @@ public class Army implements ArmyInterface {
 		return totalArchers;
 	}
 	
-	public int getRemainingTroopTypes() {
-		int troopTypeCounter = 0;
+	public Map<String,Boolean> getRemainingTroopTypes() {
+		Map<String, Boolean> troopMap = new HashMap<>();
 		
-		if(this.totalArchers > 0) {
-			troopTypeCounter++;
-		}
-		if(this.totalSpears > 0) {
-			troopTypeCounter++;
-		}
-		if(this.totalHeavySwords > 0) {
-			troopTypeCounter++;
-		}
+		troopMap.put("archers", this.totalArchers > 0);
+		troopMap.put("spearmen", this.totalSpears > 0);
+		troopMap.put("heavySwords", this.totalHeavySwords > 0);
 		
-		return troopTypeCounter;
+		return troopMap;
 	}
 	
 	public void setTotalAttack(int attack) {
