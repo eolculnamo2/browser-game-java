@@ -8,14 +8,49 @@ class CommandPanel extends React.Component {
             attackablePlayers: [
                 {
                     username: "SamplePlayer"
+                },
+                {
+                    username: "SamplePlayer"
                 }
             ],
-            playerToAttack: ""
+            x: "",
+            payload: {
+                playerToAttack: "",
+                spearmen: 0,
+                archers: 0,
+                heavySwords: 0
+            }
         }
     }
-    setPlayerToAttack(user) {
-        this.setState({playerToAttack: user});
+    setPlayerToAttack(e) {
+        const update = {...this.state.payload, playerToAttack: e.target.value};
+        this.setState({payload: update});
+    };
+
+    setSpearmen(e) {
+        const update = {...this.state.payload, spearmen: e.target.value};
+        this.setState({payload: update});
     }
+
+    setArchers(e) {
+        const update = {...this.state.payload, archers: e.target.value};
+        this.setState({payload: update});
+    }
+
+    setHeavySwords(e) {
+        const update = {...this.state.payload, heavySwords: e.target.value};
+        this.setState({payload: update});
+    }
+
+    sendTroops() {
+        fetch('/make-battle',{
+            method: "POST",
+            body: JSON.stringify(this.state.payload),
+            headers: { "Content-Type": "application/json" },
+            credentials: "same-origin"
+        })
+    }
+
     render() {
         return (
             <div>
@@ -38,17 +73,28 @@ class CommandPanel extends React.Component {
                     <div className="CommandPanel-send-troops">
                         <h3>Send Troops</h3>
                         <label>Spearmen </label>
-                        <input className="CommandPanel-input" type="number"/>
+                        <input onChange={this.setSpearmen.bind(this)} 
+                               value={this.state.payload.spearmen} 
+                               className="CommandPanel-input" 
+                               type="number"/>
                         <label>Archers </label>
-                        <input className="CommandPanel-input" type="number"/>
+                        <input onChange={this.setArchers.bind(this)} 
+                               value ={this.state.payload.archers}
+                               className="CommandPanel-input" 
+                               type="number"/>
                         <label>Heavy Swords </label>
-                        <input className="CommandPanel-input" type="number"/>
+                        <input onChange={this.setHeavySwords.bind(this)} 
+                               value={this.state.payload.heavySwords} 
+                               className="CommandPanel-input" 
+                               type="number"/>
                     </div>
                     <div>
                         <h3>Attack Player</h3>
-                        <select>
-                            {this.state.attackablePlayers.map( x => {
-                                return (<option onClick={this.setPlayerToAttack.bind(this,x.username)}>
+                        <select value={this.state.payload.playerToAttack} onChange={this.setPlayerToAttack.bind(this)}>
+                            <option defaultValue="">Select</option>
+                            {this.state.attackablePlayers.map((x,i) => {
+                                return (<option key={x+i}
+                                                value={x.username}>
                                             {x.username}
                                         </option>)
                             })}
@@ -56,7 +102,9 @@ class CommandPanel extends React.Component {
                     </div>
                 </div>
                 <div className="CommandPanel-button-flex">
-                    <button className="CommandPanel-send-button">SEND TROOPS</button>
+                    <button onClick={ this.sendTroops.bind(this) }className="CommandPanel-send-button">
+                        SEND TROOPS
+                    </button>
                 </div>
             </div>
         )
