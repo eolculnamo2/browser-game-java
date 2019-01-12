@@ -31,4 +31,10 @@
 
 .Dashboard-body {
     width: 100%;
+    padding: 2em;
+}
+
+.Dashboard-heading {
+    border-bottom: 2px solid $lightGray;
+    margin: 0;
 }

@@ -45,6 +45,7 @@ class Troops extends React.Component {
     render() {
         return (
             <div className="Troops">
+                <h1 className="Dashboard-heading">Troops</h1>
                 {troops.map( x => <UnitPurchase  description={ x.description } 
                                                  makePurchase={ this.makePurchase} 
                                                  name={ x.name }/> )}

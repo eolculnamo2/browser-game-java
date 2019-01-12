@@ -12,7 +12,10 @@ class App extends React.Component {
                 <Switch>
                      {/* Dashboard has nested links */}
                     <Route exact path='/' component={ Dashboard }/>
+                    <Route exact path='/overview' component={ Dashboard }/>
+                    <Route exact path='/resources' component={ Dashboard }/>
                     <Route exact path='/troops' component={ Dashboard }/>
+                    <Route exact path='/command-panel' component={ Dashboard }/>
                 </Switch>
             </div>
         )

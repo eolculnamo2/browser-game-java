@@ -5,3 +5,15 @@ $tan: #C09F80;
 $lightGray: #dadada;
 
 $breakpoint1: 800px;
+
+//Elements 
+.input-default { 
+    padding: .35em .75em;
+    border-radius: 3px;
+    outline: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+}

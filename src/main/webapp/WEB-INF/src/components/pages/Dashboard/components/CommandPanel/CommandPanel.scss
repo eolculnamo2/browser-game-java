@@ -1,0 +1,46 @@
+@import '../../../../../globals.scss';
+
+.CommandPanel-top-panel {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: .75em 1em;
+    margin: 0;
+    border-radius: 5px;
+    background: $blackboard;
+    color: $grain;
+    @media (min-width: $breakpoint1) {
+        width: 50%;
+    }
+}
+
+.CommandPanel-flex-body {
+    display: flex;
+}
+
+.CommandPanel-input {
+    @extend .input-default;
+    display: block;
+    margin-bottom: 1em;
+}
+
+.CommandPanel-button-flex {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.CommandPanel-send-button {
+    padding: 1em 2em;
+    background: $grain;
+    outline: none;
+    &:hover {
+        background: $oxblood;
+        color: $lightGray;
+        cursor: pointer;
+    }
+}
+
+.CommandPanel-send-troops {
+    min-height: 37vh;
+    min-width: 200px;
+}
