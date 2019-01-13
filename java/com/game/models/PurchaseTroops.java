@@ -22,14 +22,22 @@ public class PurchaseTroops {
 			session.beginTransaction();
 			userProfilePurchase = session.get(UserProfile.class, username);
 			
-			userProfilePurchase.setSpearmen(purchasedTroops.get("spearmen"));
-			userProfilePurchase.setArchers(purchasedTroops.get("archers"));
-			userProfilePurchase.setHeavySwords(purchasedTroops.get("heavySwords"));
-			
-			userProfilePurchase.setSilver(userProfilePurchase.getSilver() - purchasedTroops.get("silverCost"));
-			userProfilePurchase.setSteel(userProfilePurchase.getSteel() - purchasedTroops.get("steelCost"));
-			userProfilePurchase.setWood(userProfilePurchase.getWood() - purchasedTroops.get("woodCost"));
-			
+			//Checks to make sure enough resources exist for purchase
+			if(userProfilePurchase.getSilver() >= purchasedTroops.get("silverCost") &&
+			   userProfilePurchase.getSteel() >= purchasedTroops.get("teelCost") &&
+			   userProfilePurchase.getWood() >= purchasedTroops.get("woodCost")) {
+				
+				userProfilePurchase.setSpearmen(userProfilePurchase.getSpearmen() + purchasedTroops.get("spearmen"));
+				userProfilePurchase.setArchers(userProfilePurchase.getArchers() + purchasedTroops.get("archers"));
+				userProfilePurchase.setHeavySwords(userProfilePurchase.getHeavySwords() + purchasedTroops.get("heavySwords"));
+				
+				userProfilePurchase.setSilver(userProfilePurchase.getSilver() - purchasedTroops.get("silverCost"));
+				userProfilePurchase.setSteel(userProfilePurchase.getSteel() - purchasedTroops.get("steelCost"));
+				userProfilePurchase.setWood(userProfilePurchase.getWood() - purchasedTroops.get("woodCost"));
+				
+			} else {
+				System.out.println("Not enough resources");
+			}
 			
 			session.getTransaction().commit();
 		}

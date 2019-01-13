@@ -37,9 +37,9 @@ class Login extends React.Component {
             spearmen: 0,
             archers: 0,
             heavySwords: 0,
-            silver: 0,
-            wood: 0,
-            steel: 0
+            silver: 500,
+            wood: 750,
+            steel: 500
         }
 
         fetch('/create-profile',{

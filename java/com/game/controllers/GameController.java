@@ -41,14 +41,14 @@ public class GameController {
 								 @RequestParam(value="spearmen") int spearmen,
 								 @RequestParam(value="archers") int archers,
 								 @RequestParam(value="heavySwords") int heavySwords) {
-
+		
 		Map<String, Integer> spearCosts = Spearmen.getCost();
 		Map<String, Integer> archerCosts = Archers.getCost();
 		Map<String, Integer> heavySwordCosts = HeavySwords.getCost();
 		
-		int totalSilverCost = spearCosts.get("silver") * spearmen * archerCosts.get("silver") * archers * heavySwordCosts.get("silver");
-		int totalSteelCost = spearCosts.get("steel") * spearmen * archerCosts.get("steel") * archers * heavySwordCosts.get("steel");
-		int totalWoodCost = spearCosts.get("wood") * spearmen * archerCosts.get("wood") * archers * heavySwordCosts.get("wood");
+		int totalSilverCost = (spearCosts.get("silver") * spearmen) + (archerCosts.get("silver") * archers) + (heavySwordCosts.get("silver") * heavySwords);
+		int totalSteelCost = (spearCosts.get("steel") * spearmen) + (archerCosts.get("steel") * archers) + (heavySwordCosts.get("steel") * heavySwords);
+		int totalWoodCost = (spearCosts.get("wood") * spearmen) + (archerCosts.get("wood") * archers) + (heavySwordCosts.get("wood") * heavySwords);
 		
 		Map<String, Integer> costMap = new HashMap<>();
 		
@@ -62,7 +62,7 @@ public class GameController {
 		costMap.put("steelCost", totalSteelCost);
 		costMap.put("woodCost", totalWoodCost);
 		
-		
+
 		new PurchaseTroops(username, costMap);
 		return "Success";
 	}
