@@ -7,8 +7,8 @@ import org.hibernate.cfg.Configuration;
 
 public class ReadUserProfile {
 	
-	private List<UserProfile> userProfile;
-	public ReadUserProfile(String username, int password) {
+	private UserProfile userProfile;
+	public ReadUserProfile(String username, String password) {
 	SessionFactory factory = new Configuration()
 							.configure()
 							.addAnnotatedClass(UserProfile.class)
@@ -18,7 +18,8 @@ public class ReadUserProfile {
 		
 		try {
 			session.beginTransaction();
-			userProfile = session.createQuery("from Chart x where x.username="+username+"AND x.password="+password).getResultList();
+			List<UserProfile>queryFind = session.createQuery("from UserProfile x where x.username='"+username+"' AND x.password='"+password+"'").getResultList();
+			userProfile = queryFind.get(0);
 			session.getTransaction().commit();
 		}
 		catch(Exception e) {
@@ -27,5 +28,9 @@ public class ReadUserProfile {
 		finally {
 			session.close();
 		}
+	}
+	
+	public UserProfile getUserProfile() {
+		return this.userProfile;
 	}
 }

@@ -6,7 +6,7 @@ import org.hibernate.cfg.Configuration;
 
 public class CreateUserProfile {
 	
-		public CreateUserProfile(int id, String username, String password, String lastLogin, int powerRating, String email,
+		public CreateUserProfile(String username, String password, String lastLogin, int powerRating, String email,
 				   int spearmen, int archers, int heavySwords, int silver, int wood, int steel) {
 
 			SessionFactory factory = new Configuration()
@@ -17,7 +17,7 @@ public class CreateUserProfile {
 			Session session = factory.getCurrentSession();
 	
 		try {
-			UserProfile profile = new UserProfile(id, username, password, 
+			UserProfile profile = new UserProfile( username, password, 
 					                               lastLogin, powerRating, email,
 					                               spearmen, archers, heavySwords, 
 					                               silver, wood, steel);

@@ -8,10 +8,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name="user_profile")
 public class UserProfile {
-	@Id
-	@Column(name="id")
-	private int id;
+//	@Id
+//	@Column(name="id")
+//	private int id;
 	
+	@Id
 	@Column(name="username")
 	private String username;
 	
@@ -51,11 +52,9 @@ public class UserProfile {
 		
 	}
 	
-	public UserProfile(int id, String username, String password, String lastLogin, int powerRating, String email,
+	public UserProfile(String username, String password, String lastLogin, int powerRating, String email,
 					   int spearmen, int archers, int heavySwords, int silver, int wood, int steel) {
 		
-		
-		this.id=id;
 		this.username=username;
 		this.password=password;
 		this.email=email;
@@ -69,14 +68,6 @@ public class UserProfile {
 		this.steel=steel;
 		
 		
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getUsername() {

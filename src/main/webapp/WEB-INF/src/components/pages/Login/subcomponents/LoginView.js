@@ -1,6 +1,10 @@
 import React from 'react'
 
 class LoginView extends React.Component {
+    constructor() {
+        super();
+        this.state = {}
+    }
     handleClick() {
         this.props.changeView();
     }
@@ -15,6 +19,8 @@ class LoginView extends React.Component {
             headers: { "Content-Type": "application/json" },
             credentials: "same-origin"
         })
+        .then( res => res.json() )
+        .then( data => window.location.href="/");
     }
     render() {
         return (

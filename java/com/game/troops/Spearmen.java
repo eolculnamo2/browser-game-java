@@ -1,5 +1,8 @@
 package com.game.troops;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Spearmen implements Troops {
 	
 	public int getAttack() {
@@ -19,6 +22,16 @@ public class Spearmen implements Troops {
 	}
 	public int getBattlePosition() {
 		return 1;
+	}
+	
+	public static Map<String, Integer> getCost() {
+		Map<String, Integer> costMap = new HashMap<>();
+		
+		costMap.put("wood", 100);
+		costMap.put("steel", 20);
+		costMap.put("silver", 20);
+		
+		return costMap;
 	}
 	
 }

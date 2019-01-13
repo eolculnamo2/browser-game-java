@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Link, Route, withRouter, Redirect, Switch } from 'react-router-dom';
 import './HeaderAndFooter.scss';
 
 class Header extends React.Component {
@@ -14,10 +15,10 @@ class Header extends React.Component {
                     </div>
                     <div>
                         <ul className="Header-menu-flex">
-                            <li>Home</li>
-                            <li>Dashboard</li>
-                            <li>Nations</li>
-                            <li>Help</li>      
+                            <Link to="/"><li>Home</li></Link>
+                            <Link to="/overview"><li>Dashboard</li></Link>
+                            <Link to="/"><li>Nations</li></Link>
+                            <Link to="/login"><li>Login</li></Link>
                         </ul>
                     </div>
                 </div>
