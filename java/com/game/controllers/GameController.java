@@ -2,25 +2,28 @@ package com.game.controllers;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.game.army.TroopData;
 import com.game.battle.BattleSequence;
+import com.game.models.BattleUpdateProfiles;
 import com.game.helpers.Helpers;
 import com.game.models.CreateUserProfile;
 import com.game.models.PurchaseTroops;
+import com.game.models.ReadAllProfiles;
 import com.game.models.ReadUserProfile;
 import com.game.models.UserProfile;
 import com.game.troops.Archers;
@@ -33,6 +36,17 @@ public class GameController {
 	@GetMapping("*")
 	public String home() {
 		return "index";
+	}
+	
+	@GetMapping("/get-all-users") 
+	@ResponseBody
+	public String getAllUsers() throws JsonProcessingException {
+		
+		List<UserProfile> allProfiles = new ReadAllProfiles().getUserProfiles();
+		ObjectMapper objectMapper = new ObjectMapper();
+		String payload = objectMapper.writeValueAsString(allProfiles);
+		
+		return payload;
 	}
 	
 	@PostMapping("/purchase-troops")
@@ -69,16 +83,26 @@ public class GameController {
 	
 	@PostMapping("/make-battle")
 	@ResponseBody
-	public String makeBattle(HttpServletRequest request) throws IOException {
-		String troopData = Helpers.convertJsonToString( request.getInputStream() );
-		System.out.println(troopData);
+	public String makeBattle(@RequestParam(value="username") String username, @RequestParam(value="defender") String defender) throws IOException {
+
+		//Read Both Profiles
+		UserProfile attackingPlayerData = new ReadUserProfile(username).getUserProfile();
+		UserProfile defendingPlayerData = new ReadUserProfile(defender).getUserProfile();
 		
 		
-		ObjectMapper objectMapper = new ObjectMapper();
-		TroopData playerArmy = objectMapper.readValue(troopData, TroopData.class);
-		TroopData defendingArmy = new TroopData(playerArmy.getPlayerToAttack(), 20, 50, 10);
+		//Get Armies
+		TroopData attackingArmy = new TroopData(username, 
+												attackingPlayerData.getSpearmen(),
+				                                attackingPlayerData.getArchers(), 
+				                                attackingPlayerData.getHeavySwords());
 		
-		new BattleSequence(playerArmy, defendingArmy);
+		TroopData defendingArmy = new TroopData(defender, 
+												defendingPlayerData.getSpearmen(),
+												defendingPlayerData.getArchers(), 
+								                defendingPlayerData.getHeavySwords());
+		
+		BattleSequence battle = new BattleSequence(attackingArmy, defendingArmy);
+		new BattleUpdateProfiles(username,defender, battle.getAttacker(), battle.getDefender());
 		return "Success";
 	}
 	
@@ -106,15 +130,14 @@ public class GameController {
 	
 	@PostMapping("/login")
 	@ResponseBody
-	public String authenticateUser(HttpServletRequest request, Model model) throws JsonParseException, JsonMappingException, IOException {
+	public String authenticateUser(HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
 		String loginData = Helpers.convertJsonToString( request.getInputStream() );
 		ObjectMapper objectMapper = new ObjectMapper();
 		UserProfile profile = objectMapper.readValue(loginData, UserProfile.class);
 		
-		ReadUserProfile authenticatedProfile = new ReadUserProfile(profile.getUsername(), profile.getPassword());
+		ReadUserProfile authenticatedProfile = new ReadUserProfile(profile.getUsername());
 		String payload = objectMapper.writeValueAsString(authenticatedProfile.getUserProfile());
 		
-		model.addAttribute("user", payload);
 		return payload;
 	}
 	

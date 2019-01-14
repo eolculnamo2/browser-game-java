@@ -5,14 +5,11 @@ class CommandPanel extends React.Component {
     constructor() {
         super();
         this.state = {
-            attackablePlayers: [
-                {
-                    username: "SamplePlayer"
-                },
-                {
-                    username: "SamplePlayer"
-                }
-            ],
+            currentUser: "eolculnamo2",
+            currentPlayer: {
+
+            },
+            attackablePlayers: [],
             x: "",
             payload: {
                 playerToAttack: "",
@@ -21,6 +18,23 @@ class CommandPanel extends React.Component {
                 heavySwords: 0
             }
         }
+    }
+    componentWillMount() {
+        fetch('get-all-users')
+        .then( res => res.json() )
+        .then( data => {
+            const attackablePlayers = [];
+
+            data.forEach( x => {
+                if(x.username !== this.state.currentUser) {
+                    attackablePlayers.push(x);
+                } else {
+                    this.setState({currentPlayer: x});
+                }
+            });
+
+            this.setState({attackablePlayers})
+        });
     }
     setPlayerToAttack(e) {
         const update = {...this.state.payload, playerToAttack: e.target.value};
@@ -43,12 +57,13 @@ class CommandPanel extends React.Component {
     }
 
     sendTroops() {
-        fetch('/make-battle',{
+        const params = "?username="+this.state.currentPlayer.username+"&defender="+this.state.payload.playerToAttack;
+        console.log(params);
+        fetch('/make-battle'+params,{
             method: "POST",
-            body: JSON.stringify(this.state.payload),
             headers: { "Content-Type": "application/json" },
             credentials: "same-origin"
-        })
+        });
     }
 
     render() {
@@ -58,15 +73,15 @@ class CommandPanel extends React.Component {
                 <ul className="CommandPanel-top-panel">
                     <li>
                         <b>Spearmen </b>
-                        <span>20</span>
+                        <span>{this.state.currentPlayer.spearmen}</span>
                     </li>
                     <li>
                         <b>Archers </b>
-                        <span>20</span>
+                        <span>{this.state.currentPlayer.archers}</span>
                     </li>
                     <li>
                         <b>Heavy Swords </b>
-                        <span>100</span>
+                        <span>{this.state.currentPlayer.heavySwords}</span>
                     </li>
                 </ul>
                 <div className="CommandPanel-flex-body">

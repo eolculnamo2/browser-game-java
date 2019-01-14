@@ -113,4 +113,12 @@ public class BattleSequence {
 		return spearsDefense + archersDefense + heavySwordsDefense;
 	}
 	
+	public Army getAttacker() {
+		return this.attacker;
+	}
+	
+	public Army getDefender() {
+		return this.defender;
+	}
+	
 }

@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 @Entity
 @Table(name="user_profile")
 public class UserProfile {
@@ -18,6 +21,7 @@ public class UserProfile {
 	
 	//TODO Add bcrypt
 	@Column(name="password")
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	
 	@Column(name="email")
