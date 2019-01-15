@@ -6,11 +6,8 @@ class CommandPanel extends React.Component {
         super();
         this.state = {
             currentUser: "eolculnamo2",
-            currentPlayer: {
-
-            },
+            currentPlayer: {},
             attackablePlayers: [],
-            x: "",
             payload: {
                 playerToAttack: "",
                 spearmen: 0,
@@ -57,13 +54,25 @@ class CommandPanel extends React.Component {
     }
 
     sendTroops() {
-        const params = "?username="+this.state.currentPlayer.username+"&defender="+this.state.payload.playerToAttack;
-        console.log(params);
-        fetch('/make-battle'+params,{
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "same-origin"
-        });
+        const params = "?username="+this.state.currentPlayer.username+ 
+                        "&defender="+this.state.payload.playerToAttack +
+                        "&spearmen="+this.state.payload.spearmen+
+                        "&archers="+this.state.payload.archers+
+                        "&heavySwords="+this.state.payload.heavySwords;
+                     
+        const player = { ...this.state.currentPlayer };
+        const payload = { ...this.state.payload };
+        if(payload.spearmen <= player.spearmen && 
+           payload.archers <= player.archers &&
+           payload.heavySwords <= player.heavySwords ) {
+            fetch('/make-battle'+params,{
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "same-origin"
+            })
+        } else {
+            alert("You can not send more troops than you have.");
+        }
     }
 
     render() {

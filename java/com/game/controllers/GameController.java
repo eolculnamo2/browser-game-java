@@ -83,13 +83,22 @@ public class GameController {
 	
 	@PostMapping("/make-battle")
 	@ResponseBody
-	public String makeBattle(@RequestParam(value="username") String username, @RequestParam(value="defender") String defender) throws IOException {
+	public String makeBattle(@RequestParam(value="username") String username,
+			                 @RequestParam(value="defender") String defender,
+			                 @RequestParam(value="spearmen") int spearsSent,
+			                 @RequestParam(value="archers") int archersSent,
+			                 @RequestParam(value="heavySwords") int heavySwordsSent) throws IOException {
 
 		//Read Both Profiles
 		UserProfile attackingPlayerData = new ReadUserProfile(username).getUserProfile();
 		UserProfile defendingPlayerData = new ReadUserProfile(defender).getUserProfile();
 		
-		
+		//Check that player does not send more troops than available.
+		if(spearsSent > attackingPlayerData.getSpearmen() ||
+		   archersSent > attackingPlayerData.getArchers() || 
+		   heavySwordsSent > attackingPlayerData.getHeavySwords()) {
+			return "Not enough troops";
+		}
 		//Get Armies
 		TroopData attackingArmy = new TroopData(username, 
 												attackingPlayerData.getSpearmen(),

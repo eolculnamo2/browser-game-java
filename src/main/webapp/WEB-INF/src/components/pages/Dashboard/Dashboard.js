@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Link, Route, withRouter, Redirect, Switch } fr
 import './Dashboard.scss';
 import Troops from './components/Troops/Troops';
 import CommandPanel from './components/CommandPanel/CommandPanel';
+import Resources from './components/Resources/Resources';
 
 class Dashboard extends React.Component {
     render() {
@@ -23,6 +24,9 @@ class Dashboard extends React.Component {
                             )}/>}
                             {<Route exact path="/command-panel" render={ () => (
                                  <CommandPanel />
+                            )}/>}
+                            {<Route exact path="/resources" render={ () => (
+                                 <Resources />
                             )}/>}
                         </Switch>
                     </div>
