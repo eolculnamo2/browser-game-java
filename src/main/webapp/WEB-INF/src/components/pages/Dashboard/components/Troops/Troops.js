@@ -28,20 +28,17 @@ class Troops extends React.Component {
     }
 
     makePurchase(unitType, amount) {
-        //const payload = { unitType, amount }
-        console.log(unitType, amount);
         const params = {
             username: "rbertram8",  // To do, add username with spring security
             spearmen: 0,
             archers: 0,
             heavySwords: 0
         }
-
         params[unitType.toLowerCase()] = amount;
-        
+        //destructure params
         const {username, spearmen, archers, heavySwords} = params;
         let paramsString = "username="+username+"&spearmen="+spearmen+"&archers="+archers+"&heavySwords="+heavySwords;
-        console.log(paramsString);
+        
         fetch('/purchase-troops?'+paramsString,{
             method: "POST",
             headers: { "Content-Type": "application/json" },

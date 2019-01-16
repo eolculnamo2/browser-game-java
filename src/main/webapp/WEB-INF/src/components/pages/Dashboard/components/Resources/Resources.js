@@ -9,6 +9,7 @@ class Resources extends React.Component {
             username: "rbertram8",
             buildings: []
         }
+        this.upgradeBuilding = this.upgradeBuilding.bind(this);
     }
     componentDidMount() {
         let url = "/get-building-info?username="+this.state.username;
@@ -44,17 +45,48 @@ class Resources extends React.Component {
             this.setState({buildings})
         });
     }
+    upgradeBuilding(building) {
+        //building sends type
+        const paramsString="?username="+this.state.username+"&building="+building;
+        fetch('/upgrade-building'+paramsString,{
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "same-origin"
+            })
+        .then( res => res.json())
+        .then( data => {
+            if(data.canAfford === false) {
+                alert("Not enough resources");
+            } else {
+                let updateIndex = building === "wood" ? 0 : building === "steel" ? 1 : 2
+                const updateArr = this.state.buildings;
+                updateArr[updateIndex].level++;
+
+                this.setState({buildings: updateArr});
+            }
+        })
+        
+    }
+
+    getResources() {
+        //fetch will go here
+    }
+
     render() {
         return (
             <div>
-                <h1>Resources and Buildings</h1>
+                <div className="Resources-flex">
+                    <h1>Resources and Buildings</h1>
+                    <button className="Resources-flex" onClick={this.getResources.bind(this)}>Claim Daily Resources</button>
+                </div>
                 {this.state.buildings.map( x => <Building costToUpgrade={x.costToUpgrade}
                                                           description={x.description}
                                                           key={x.name}
                                                           level={x.level} 
                                                           name={x.name}
                                                           productionPerDay={x.productionPerDay}
-                                                          type={x.type} />)}
+                                                          type={x.type}
+                                                          upgradeBuilding={this.upgradeBuilding} />)}
             </div>
         )
     }

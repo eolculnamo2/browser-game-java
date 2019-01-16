@@ -31,6 +31,7 @@ import com.game.models.CreateUserProfile;
 import com.game.models.PurchaseTroops;
 import com.game.models.ReadAllProfiles;
 import com.game.models.ReadUserProfile;
+import com.game.models.UpgradeBuilding;
 import com.game.models.UserProfile;
 import com.game.troops.Archers;
 import com.game.troops.HeavySwords;
@@ -58,7 +59,7 @@ public class GameController {
 	@GetMapping("/get-building-info")
 	@ResponseBody
 	public String getBuildingInfo(@RequestParam(value="username") String username) throws JSONException, JsonProcessingException {
-		System.out.println("WHAT:" + username);
+		
 		UserProfile user = new ReadUserProfile(username).getUserProfile();
 		
 		
@@ -77,13 +78,22 @@ public class GameController {
 		payload.put("silverProduction", taxableEconomy.getProduction());
 		
 		payload.put("woodUpgradeCost", loggingCamp.getUpgradeCost());
-		payload.put("steelUpgradeCost", loggingCamp.getUpgradeCost());
-		payload.put("silverupgradeCost", loggingCamp.getUpgradeCost());
+		payload.put("steelUpgradeCost", steelFoundry.getUpgradeCost());
+		payload.put("silverupgradeCost", taxableEconomy.getUpgradeCost());
 		
-		System.out.println(loggingCamp.getProduction());
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		String payloadStr = objectMapper.writeValueAsString(payload);
 		return payload.toString();
+	}
+	
+	@PostMapping("/upgrade-building")
+	@ResponseBody
+	public String upgradeBuilting(@RequestParam(value="username") String username, @RequestParam(value="building") String building) throws JSONException {
+		
+		UpgradeBuilding upgrade = new UpgradeBuilding(username, building);
+		
+		JSONObject response = new JSONObject();
+		response.put("canAfford", upgrade.getCanAfford());
+		
+		return response.toString();
 	}
 	
 	@PostMapping("/purchase-troops")

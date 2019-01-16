@@ -2,6 +2,11 @@ import React from 'react';
 import '../Resources.scss';
 
 class Building extends React.Component {
+
+    handleClick() {
+        this.props.upgradeBuilding(this.props.type);
+    }
+
     render() {
         return (
             <div className="Resources-building-wrap">
@@ -9,7 +14,7 @@ class Building extends React.Component {
                 <b className="Resources-production">{this.props.productionPerDay} {this.props.type} per day</b>
                 <p className="Resources-text">{this.props.description}</p>
                 <p className="Resources-text Resources-text--extra-m">Upgrade Cost: {this.props.costToUpgrade} {this.props.type}</p>
-                <button className="Resources-upgrade-btn">Upgrade to level {this.props.level+1}</button>
+                <button onClick={this.handleClick.bind(this)}className="Resources-upgrade-btn">Upgrade to level {this.props.level+1}</button>
             </div>
         )
     }
