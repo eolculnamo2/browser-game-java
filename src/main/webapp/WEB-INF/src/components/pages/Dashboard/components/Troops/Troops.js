@@ -31,7 +31,7 @@ class Troops extends React.Component {
         //const payload = { unitType, amount }
         console.log(unitType, amount);
         const params = {
-            username: "eolculnamo2",  // To do, add username with spring security
+            username: "rbertram8",  // To do, add username with spring security
             spearmen: 0,
             archers: 0,
             heavySwords: 0

@@ -1,1 +1,30 @@
 @import '../../../../../globals.scss';
+
+.Resources-upgrade-btn {
+    padding: .55em 1em;
+    cursor: pointer;
+    border-radius: 2px;
+    outline: none;
+    &:hover {
+        background: $tan;
+        border: 1px solid $blackboard;
+    }
+}
+
+.Resources-heading {
+    margin-bottom: 0;
+    border-bottom: 1px solid $tan;
+}
+
+.Resources-production {
+    margin: .5em 0;
+    display: block;
+}
+
+.Resources-text {
+    margin: .25em 0; 
+    &--extra-m {
+        margin: .5em 0;
+        font-weight: 600;
+    }
+}

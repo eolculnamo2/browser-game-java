@@ -5,7 +5,7 @@ class CommandPanel extends React.Component {
     constructor() {
         super();
         this.state = {
-            currentUser: "eolculnamo2",
+            currentUser: "rbertram8",
             currentPlayer: {},
             attackablePlayers: [],
             payload: {

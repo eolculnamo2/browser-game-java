@@ -51,13 +51,23 @@ public class UserProfile {
 	@Column(name="steel")
 	private int steel;
 	
+	@Column(name="silver_level")
+	private int silverLevel;
+	
+	@Column(name="wood_level")
+	private int woodLevel;
+	
+	@Column(name="steel_level")
+	private int steelLevel;
+	
 	
 	public UserProfile() {
 		
 	}
 	
 	public UserProfile(String username, String password, String lastLogin, int powerRating, String email,
-					   int spearmen, int archers, int heavySwords, int silver, int wood, int steel) {
+					   int spearmen, int archers, int heavySwords, int silver, int wood, int steel, int silverLevel,
+					   int woodLevel, int steelLevel) {
 		
 		this.username=username;
 		this.password=password;
@@ -70,7 +80,9 @@ public class UserProfile {
 		this.silver=silver;
 		this.wood=wood;
 		this.steel=steel;
-		
+		this.silverLevel = silverLevel;
+		this.woodLevel = woodLevel;
+		this.steelLevel = steelLevel;
 		
 	}
 
@@ -161,6 +173,28 @@ public class UserProfile {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 	
+	public int getSilverLevel() {
+		return silverLevel;
+	}
+	
+	public void setSilverLevel(int silverLevel) {
+		this.silverLevel = silverLevel;
+	}
+	
+	public int getWoodLevel() {
+		return woodLevel;
+	}
+	
+	public void setWoodLevel(int woodLevel) {
+		this.woodLevel = woodLevel;
+	}
+	
+	public int getSteelLevel() {
+		return steelLevel;
+	}
+	
+	public void setSteelLevel(int steelLevel) {
+		this.steelLevel = steelLevel;
+	}
 }

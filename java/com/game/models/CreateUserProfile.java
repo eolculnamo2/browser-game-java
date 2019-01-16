@@ -20,7 +20,7 @@ public class CreateUserProfile {
 			UserProfile profile = new UserProfile( username, password, 
 					                               lastLogin, powerRating, email,
 					                               spearmen, archers, heavySwords, 
-					                               silver, wood, steel);
+					                               silver, wood, steel, 1, 1, 1);
 			session.beginTransaction();
 			session.save(profile);
 			session.getTransaction().commit();

@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +21,12 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.game.army.TroopData;
 import com.game.battle.BattleSequence;
-import com.game.models.BattleUpdateProfiles;
+import com.game.buildings.Building;
+import com.game.buildings.LoggingCamps;
+import com.game.buildings.SteelFoundry;
+import com.game.buildings.TaxableEconomy;
 import com.game.helpers.Helpers;
+import com.game.models.BattleUpdateProfiles;
 import com.game.models.CreateUserProfile;
 import com.game.models.PurchaseTroops;
 import com.game.models.ReadAllProfiles;
@@ -47,6 +53,37 @@ public class GameController {
 		String payload = objectMapper.writeValueAsString(allProfiles);
 		
 		return payload;
+	}
+	
+	@GetMapping("/get-building-info")
+	@ResponseBody
+	public String getBuildingInfo(@RequestParam(value="username") String username) throws JSONException, JsonProcessingException {
+		System.out.println("WHAT:" + username);
+		UserProfile user = new ReadUserProfile(username).getUserProfile();
+		
+		
+		Building loggingCamp = new LoggingCamps(user.getWoodLevel());
+		Building steelFoundry = new SteelFoundry(user.getSteelLevel());
+		Building taxableEconomy = new TaxableEconomy(user.getSilverLevel());
+		
+		JSONObject payload = new JSONObject();
+		
+		payload.put("woodLevel", loggingCamp.getLevel());
+		payload.put("steelLevel", steelFoundry.getLevel());
+		payload.put("silverLevel", taxableEconomy.getLevel());
+		
+		payload.put("woodProduction", loggingCamp.getProduction());
+		payload.put("steelProduction", steelFoundry.getProduction());
+		payload.put("silverProduction", taxableEconomy.getProduction());
+		
+		payload.put("woodUpgradeCost", loggingCamp.getUpgradeCost());
+		payload.put("steelUpgradeCost", loggingCamp.getUpgradeCost());
+		payload.put("silverupgradeCost", loggingCamp.getUpgradeCost());
+		
+		System.out.println(loggingCamp.getProduction());
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		String payloadStr = objectMapper.writeValueAsString(payload);
+		return payload.toString();
 	}
 	
 	@PostMapping("/purchase-troops")
