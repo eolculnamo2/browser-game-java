@@ -38,7 +38,7 @@ class Troops extends React.Component {
         //destructure params
         const {username, spearmen, archers, heavySwords} = params;
         let paramsString = "username="+username+"&spearmen="+spearmen+"&archers="+archers+"&heavySwords="+heavySwords;
-        
+
         fetch('/purchase-troops?'+paramsString,{
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -55,7 +55,7 @@ class Troops extends React.Component {
             <div className="Troops">
                 <h1 className="Dashboard-heading">Troops</h1>
                 {troops.map( x => <UnitPurchase  description={ x.description } 
-                                                 makePurchase={ this.makePurchase} 
+                                                 makePurchase={ this.makePurchase } 
                                                  name={ x.name }/> )}
             </div>
         )

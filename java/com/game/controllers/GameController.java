@@ -84,16 +84,24 @@ public class GameController {
 		return payload.toString();
 	}
 	
+	@GetMapping("/get-user-data")
+	@ResponseBody
+	public String getUserData(@RequestParam(value="username") String username) throws JsonProcessingException {
+		UserProfile user = new ReadUserProfile(username).getUserProfile();
+		ObjectMapper obj = new ObjectMapper();
+		return obj.writeValueAsString(user);
+	}
+	
 	@PostMapping("/upgrade-building")
 	@ResponseBody
 	public String upgradeBuilting(@RequestParam(value="username") String username, @RequestParam(value="building") String building) throws JSONException {
 		
 		UpgradeBuilding upgrade = new UpgradeBuilding(username, building);
 		
-		JSONObject response = new JSONObject();
-		response.put("canAfford", upgrade.getCanAfford());
+		JSONObject json = new JSONObject();
+		json.put("canAfford", upgrade.getCanAfford());
 		
-		return response.toString();
+		return json.toString();
 	}
 	
 	@PostMapping("/purchase-troops")

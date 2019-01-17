@@ -31,7 +31,7 @@ public class BattleUpdateProfiles {
 		} catch(Exception e) {
 			System.out.println(e);
 		} finally {
-			session.close();
+			factory.close();
 		}
 	}
 }

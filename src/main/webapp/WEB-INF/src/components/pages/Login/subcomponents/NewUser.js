@@ -46,9 +46,11 @@ class NewUser extends React.Component {
                        value={this.state.username} />
                 <p>Password</p>
                 <input onChange={this.setPassword.bind(this)}
+                       type="password"
                        value={this.state.password} />
                 <p>Confirm Password</p>
                 <input onChange={this.setConfirm.bind(this)}
+                       type="password"
                        value={this.state.confirm} />
                 <p>Email</p>
                 <input onChange={this.setEmail.bind(this)}

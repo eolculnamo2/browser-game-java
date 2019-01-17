@@ -77,7 +77,7 @@ class Resources extends React.Component {
             <div>
                 <div className="Resources-flex">
                     <h1>Resources and Buildings</h1>
-                    <button className="Resources-flex" onClick={this.getResources.bind(this)}>Claim Daily Resources</button>
+                    <button className="Resources-upgrade-btn" onClick={this.getResources.bind(this)}>Claim Daily Resources</button>
                 </div>
                 {this.state.buildings.map( x => <Building costToUpgrade={x.costToUpgrade}
                                                           description={x.description}

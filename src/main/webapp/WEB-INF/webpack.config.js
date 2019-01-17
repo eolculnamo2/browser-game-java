@@ -13,7 +13,7 @@ module.exports = {
         compress: true,
         port: 3000,
         proxy: {
-            '/': 'http://127.0.0.1:8080/browser-game/'
+            '/': 'http://127.0.0.1:8080/'
           }
     },
     module: {

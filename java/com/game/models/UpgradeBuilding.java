@@ -60,7 +60,7 @@ public class UpgradeBuilding {
 		} catch(Exception e) {
 			System.out.println(e);
 		} finally {
-			session.close();
+			factory.close();
 		}
 	}
 	public Boolean getCanAfford() {
