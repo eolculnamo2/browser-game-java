@@ -77,34 +77,34 @@ public class AppConfig implements WebMvcConfigurer {
 		return Integer.parseInt(env.getProperty(propName));
 	}
 	
-//	@Bean
-//	public DataSource securityDataSource() {
-//		//create connection pool
-//		ComboPooledDataSource securityDataSource = new ComboPooledDataSource();
-//		//set the jdbc driver class
-//		try {
-//			securityDataSource.setDriverClass(env.getProperty("jdbc.driver"));
-//		} catch (PropertyVetoException exc) {
-//			throw new RuntimeException(exc);
-//		}
-//		//log the connection props
-//		logger.info(">>> jdbc.url="+ env.getProperty("jdbc.url"));
-//		logger.info(">>> jdbc.user="+ env.getProperty("jdbc.user"));
-//		//set database connection props
-//		securityDataSource.setJdbcUrl(env.getProperty("jdbc.url"));
-//		securityDataSource.setUser(env.getProperty("jdbc.user"));
-//		securityDataSource.setPassword(env.getProperty("jdbc.password"));
-//		securityDataSource.setInitialPoolSize(
-//				getIntProperty("connection.pool.initialPoolSize",env));
-//		securityDataSource.setMinPoolSize(
-//				getIntProperty("connection.pool.minPoolSize",env));
-//		securityDataSource.setMaxPoolSize(
-//				getIntProperty("connection.pool.maxPoolSize",env));
-//		securityDataSource.setMaxIdleTime(
-//				getIntProperty("connection.pool.maxIdleTime",env));
-//		
-//		
-//		//set connection pool props
-//		return securityDataSource;
-//	}
+	@Bean
+	public DataSource securityDataSource() {
+		//create connection pool
+		ComboPooledDataSource securityDataSource = new ComboPooledDataSource();
+		//set the jdbc driver class
+		try {
+			securityDataSource.setDriverClass(env.getProperty("jdbc.driver"));
+		} catch (PropertyVetoException exc) {
+			throw new RuntimeException(exc);
+		}
+		//log the connection props
+		logger.info(">>> jdbc.url="+ env.getProperty("jdbc.url"));
+		logger.info(">>> jdbc.user="+ env.getProperty("jdbc.user"));
+		//set database connection props
+		securityDataSource.setJdbcUrl(env.getProperty("jdbc.url"));
+		securityDataSource.setUser(env.getProperty("jdbc.user"));
+		securityDataSource.setPassword(env.getProperty("jdbc.password"));
+		securityDataSource.setInitialPoolSize(
+				getIntProperty("connection.pool.initialPoolSize",env));
+		securityDataSource.setMinPoolSize(
+				getIntProperty("connection.pool.minPoolSize",env));
+		securityDataSource.setMaxPoolSize(
+				getIntProperty("connection.pool.maxPoolSize",env));
+		securityDataSource.setMaxIdleTime(
+				getIntProperty("connection.pool.maxIdleTime",env));
+		
+		
+		//set connection pool props
+		return securityDataSource;
+	}
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +45,18 @@ public class GameController {
 	public String home() {
 		return "index";
 	}
+	
+	@GetMapping("/username")
+	@ResponseBody
+	public String currentUserName(Authentication authentication) {
+		return authentication.getName();
+	}
+	
+//	@GetMapping("/username")
+//    @ResponseBody
+//    public String currentUserName(Authentication authentication) {
+//        return authentication.getName();
+//    }
 	
 	@GetMapping("/get-all-users") 
 	@ResponseBody
@@ -177,7 +190,7 @@ public class GameController {
 		String profileData = Helpers.convertJsonToString( request.getInputStream() );
 		ObjectMapper objectMapper = new ObjectMapper();
 		UserProfile newProfile = objectMapper.readValue(profileData, UserProfile.class);
-		
+		System.out.println("HERE");
 		new CreateUserProfile(newProfile.getUsername(), 
 				              newProfile.getPassword(),
 				              newProfile.getLastLogin(),

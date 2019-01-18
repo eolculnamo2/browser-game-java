@@ -26,10 +26,12 @@ public class CreateUserProfile {
 			session.getTransaction().commit();
 			System.out.println(profile.getUsername());
 			System.out.println("SAVED");
+		} catch(Exception e) {
+			System.out.println(e);
 		}
 		finally {
 			session.close();
-			factory.close();
+			//factory.close();
 		}
 	}
 }

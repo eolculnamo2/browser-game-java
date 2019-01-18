@@ -13,16 +13,18 @@ class App extends React.Component {
         super();
         this.state =  {
             user: {},
-            ready: false
+            ready: true
         }
         this.DashboardAndProps=this.DashboardAndProps.bind(this);
     }
     componentDidMount() {
-        fetch("/get-user-data?username=rbertram8")
-        .then( res => res.json())
-        .then( user => {
-           this.setState({user, ready: true})
-        });
+        try {
+        // fetch("/get-user-data?username=rbertram8")
+        // .then( res => res.json())
+        // .then( user => {
+        //    this.setState({user, ready: true})
+        // });
+    }   catch(e){}
     }
      DashboardAndProps (props) {
             return  <Dashboard
