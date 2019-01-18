@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
-@Table(name="user_profile")
+@Table(name="users")
 public class UserProfile {
 //	@Id
 //	@Column(name="id")
@@ -60,6 +60,9 @@ public class UserProfile {
 	@Column(name="steel_level")
 	private int steelLevel;
 	
+	@Column(name="enabled")
+	private int enabled;
+	
 	
 	public UserProfile() {
 		
@@ -83,6 +86,7 @@ public class UserProfile {
 		this.silverLevel = silverLevel;
 		this.woodLevel = woodLevel;
 		this.steelLevel = steelLevel;
+		this.enabled = 1;
 		
 	}
 

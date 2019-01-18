@@ -17,18 +17,21 @@ class CommandPanel extends React.Component {
         }
     }
     componentWillMount() {
-        fetch('get-all-users')
+        fetch('/get-all-users')
         .then( res => res.json() )
         .then( data => {
             const attackablePlayers = [];
-
-            data.forEach( x => {
-                if(x.username !== this.state.currentUser) {
-                    attackablePlayers.push(x);
-                } else {
-                    this.setState({currentPlayer: x});
-                }
-            });
+            try {
+                data.forEach( x => {
+                    if(x.username !== this.state.currentUser) {
+                        attackablePlayers.push(x);
+                    } else {
+                        this.setState({currentPlayer: x});
+                    }
+                });
+            } catch(e) {
+                throw "Troop data is null";
+            }
 
             this.setState({attackablePlayers})
         });

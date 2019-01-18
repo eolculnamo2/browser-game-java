@@ -5,8 +5,21 @@ import './Dashboard.scss';
 import Troops from './components/Troops/Troops';
 import CommandPanel from './components/CommandPanel/CommandPanel';
 import Resources from './components/Resources/Resources';
+import Overview from './components/Overview/Overview';
 
 class Dashboard extends React.Component {
+    constructor() {
+        super();
+        this.OverviewWithProps = this.OverviewWithProps.bind(this);
+    }
+    OverviewWithProps(props) {
+        return(
+            <Overview
+                user={this.props.user}
+                {...props}
+                />
+        )
+    }
     render() {
         return(
             <div>
@@ -19,6 +32,7 @@ class Dashboard extends React.Component {
                     </ul>
                     <div className="Dashboard-body">
                         <Switch>
+                            {<Route exact path="/overview" render={this.OverviewWithProps}/>}
                             {<Route exact path="/troops" render={ () => (
                                  <Troops />
                             )}/>}

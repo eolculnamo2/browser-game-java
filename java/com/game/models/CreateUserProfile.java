@@ -28,6 +28,7 @@ public class CreateUserProfile {
 			System.out.println("SAVED");
 		}
 		finally {
+			session.close();
 			factory.close();
 		}
 	}

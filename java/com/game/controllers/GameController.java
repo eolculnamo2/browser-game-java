@@ -60,6 +60,7 @@ public class GameController {
 	@ResponseBody
 	public String getBuildingInfo(@RequestParam(value="username") String username) throws JSONException, JsonProcessingException {
 		
+		
 		UserProfile user = new ReadUserProfile(username).getUserProfile();
 		
 		
