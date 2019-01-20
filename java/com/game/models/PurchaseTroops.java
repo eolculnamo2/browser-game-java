@@ -17,16 +17,16 @@ public class PurchaseTroops {
 							.buildSessionFactory();
 	
 		Session session = factory.getCurrentSession();
-		
+
 		try {
 			session.beginTransaction();
 			userProfilePurchase = session.get(UserProfile.class, username);
-			
+
 			//Checks to make sure enough resources exist for purchase
 			if(userProfilePurchase.getSilver() >= purchasedTroops.get("silverCost") &&
-			   userProfilePurchase.getSteel() >= purchasedTroops.get("teelCost") &&
+			   userProfilePurchase.getSteel() >= purchasedTroops.get("steelCost") &&
 			   userProfilePurchase.getWood() >= purchasedTroops.get("woodCost")) {
-				
+
 				userProfilePurchase.setSpearmen(userProfilePurchase.getSpearmen() + purchasedTroops.get("spearmen"));
 				userProfilePurchase.setArchers(userProfilePurchase.getArchers() + purchasedTroops.get("archers"));
 				userProfilePurchase.setHeavySwords(userProfilePurchase.getHeavySwords() + purchasedTroops.get("heavySwords"));
@@ -42,11 +42,12 @@ public class PurchaseTroops {
 			session.getTransaction().commit();
 		}
 		catch(Exception e) {
+			System.out.println("ERror here");
 			System.out.println(e);
 		}
 		finally {
 			session.close();
-			factory.close();
+			//factory.close();
 		}
 	}
 	

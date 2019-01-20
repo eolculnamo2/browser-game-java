@@ -28,17 +28,17 @@ class Troops extends React.Component {
     }
 
     makePurchase(unitType, amount) {
+
         const params = {
-            username: "rbertram8",  // To do, add username with spring security
             spearmen: 0,
             archers: 0,
             heavySwords: 0
         }
         params[unitType.toLowerCase()] = amount;
         //destructure params
-        const {username, spearmen, archers, heavySwords} = params;
-        let paramsString = "username="+username+"&spearmen="+spearmen+"&archers="+archers+"&heavySwords="+heavySwords;
-
+        const {spearmen, archers, heavySwords} = params;
+        let paramsString = "spearmen="+spearmen+"&archers="+archers+"&heavySwords="+heavySwords;
+        console.log(paramsString)
         fetch('/purchase-troops?'+paramsString,{
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -55,6 +55,7 @@ class Troops extends React.Component {
             <div className="Troops">
                 <h1 className="Dashboard-heading">Troops</h1>
                 {troops.map( x => <UnitPurchase  description={ x.description } 
+                                                 key={x.name}
                                                  makePurchase={ this.makePurchase } 
                                                  name={ x.name }/> )}
             </div>

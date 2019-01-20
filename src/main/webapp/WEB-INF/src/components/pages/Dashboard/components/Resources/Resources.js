@@ -12,7 +12,7 @@ class Resources extends React.Component {
         this.upgradeBuilding = this.upgradeBuilding.bind(this);
     }
     componentDidMount() {
-        let url = "/get-building-info?username="+this.state.username;
+        let url = "/get-building-info";
         fetch(url)
         .then( res => res.json())
         .then( data => {
@@ -47,7 +47,7 @@ class Resources extends React.Component {
     }
     upgradeBuilding(building) {
         //building sends type
-        const paramsString="?username="+this.state.username+"&building="+building;
+        const paramsString="?building="+building;
         fetch('/upgrade-building'+paramsString,{
             method: "POST",
             headers: { "Content-Type": "application/json" },

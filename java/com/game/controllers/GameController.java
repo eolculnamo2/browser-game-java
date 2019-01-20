@@ -71,10 +71,10 @@ public class GameController {
 	
 	@GetMapping("/get-building-info")
 	@ResponseBody
-	public String getBuildingInfo(@RequestParam(value="username") String username) throws JSONException, JsonProcessingException {
+	public String getBuildingInfo(Authentication authentication) throws JSONException, JsonProcessingException {
 		
 		
-		UserProfile user = new ReadUserProfile(username).getUserProfile();
+		UserProfile user = new ReadUserProfile(authentication.getName()).getUserProfile();
 		
 		
 		Building loggingCamp = new LoggingCamps(user.getWoodLevel());
@@ -100,17 +100,17 @@ public class GameController {
 	
 	@GetMapping("/get-user-data")
 	@ResponseBody
-	public String getUserData(@RequestParam(value="username") String username) throws JsonProcessingException {
-		UserProfile user = new ReadUserProfile(username).getUserProfile();
+	public String getUserData(Authentication authentication) throws JsonProcessingException {
+		UserProfile user = new ReadUserProfile(authentication.getName()).getUserProfile();
 		ObjectMapper obj = new ObjectMapper();
 		return obj.writeValueAsString(user);
 	}
 	
 	@PostMapping("/upgrade-building")
 	@ResponseBody
-	public String upgradeBuilting(@RequestParam(value="username") String username, @RequestParam(value="building") String building) throws JSONException {
+	public String upgradeBuilting(Authentication authentication, @RequestParam(value="building") String building) throws JSONException {
 		
-		UpgradeBuilding upgrade = new UpgradeBuilding(username, building);
+		UpgradeBuilding upgrade = new UpgradeBuilding(authentication.getName(), building);
 		
 		JSONObject json = new JSONObject();
 		json.put("canAfford", upgrade.getCanAfford());
@@ -120,7 +120,7 @@ public class GameController {
 	
 	@PostMapping("/purchase-troops")
 	@ResponseBody
-	public String purchaseTroops(@RequestParam(value="username") String username, 
+	public String purchaseTroops(Authentication authentication, 
 								 @RequestParam(value="spearmen") int spearmen,
 								 @RequestParam(value="archers") int archers,
 								 @RequestParam(value="heavySwords") int heavySwords) {
@@ -145,21 +145,20 @@ public class GameController {
 		costMap.put("steelCost", totalSteelCost);
 		costMap.put("woodCost", totalWoodCost);
 		
-
-		new PurchaseTroops(username, costMap);
+		new PurchaseTroops(authentication.getName(), costMap);
 		return "Success";
 	}
 	
 	@PostMapping("/make-battle")
 	@ResponseBody
-	public String makeBattle(@RequestParam(value="username") String username,
+	public String makeBattle(Authentication authentication,
 			                 @RequestParam(value="defender") String defender,
 			                 @RequestParam(value="spearmen") int spearsSent,
 			                 @RequestParam(value="archers") int archersSent,
 			                 @RequestParam(value="heavySwords") int heavySwordsSent) throws IOException {
 
 		//Read Both Profiles
-		UserProfile attackingPlayerData = new ReadUserProfile(username).getUserProfile();
+		UserProfile attackingPlayerData = new ReadUserProfile(authentication.getName()).getUserProfile();
 		UserProfile defendingPlayerData = new ReadUserProfile(defender).getUserProfile();
 		
 		//Check that player does not send more troops than available.
@@ -169,7 +168,7 @@ public class GameController {
 			return "Not enough troops";
 		}
 		//Get Armies
-		TroopData attackingArmy = new TroopData(username, 
+		TroopData attackingArmy = new TroopData(authentication.getName(), 
 												attackingPlayerData.getSpearmen(),
 				                                attackingPlayerData.getArchers(), 
 				                                attackingPlayerData.getHeavySwords());
@@ -180,7 +179,7 @@ public class GameController {
 								                defendingPlayerData.getHeavySwords());
 		
 		BattleSequence battle = new BattleSequence(attackingArmy, defendingArmy);
-		new BattleUpdateProfiles(username,defender, battle.getAttacker(), battle.getDefender());
+		new BattleUpdateProfiles(authentication.getName(),defender, battle.getAttacker(), battle.getDefender());
 		return "Success";
 	}
 	

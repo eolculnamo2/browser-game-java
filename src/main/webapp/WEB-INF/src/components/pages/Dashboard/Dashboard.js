@@ -11,10 +11,19 @@ class Dashboard extends React.Component {
     constructor() {
         super();
         this.OverviewWithProps = this.OverviewWithProps.bind(this);
+        this.CommandPanelWithProps = this.CommandPanelWithProps.bind(this);
     }
     OverviewWithProps(props) {
         return(
             <Overview
+                user={this.props.user}
+                {...props}
+                />
+        )
+    }
+    CommandPanelWithProps(props) {
+        return(
+            <CommandPanel
                 user={this.props.user}
                 {...props}
                 />
@@ -36,9 +45,7 @@ class Dashboard extends React.Component {
                             {<Route exact path="/troops" render={ () => (
                                  <Troops />
                             )}/>}
-                            {<Route exact path="/command-panel" render={ () => (
-                                 <CommandPanel />
-                            )}/>}
+                            {<Route exact path="/command-panel" render={this.CommandPanelWithProps}/>}
                             {<Route exact path="/resources" render={ () => (
                                  <Resources />
                             )}/>}

@@ -2,11 +2,10 @@ import React from 'react'
 import './CommandPanel.scss';
 
 class CommandPanel extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            currentUser: "rbertram8",
-            currentPlayer: {},
+            currentPlayer: this.props.user,
             attackablePlayers: [],
             payload: {
                 playerToAttack: "",
@@ -16,21 +15,20 @@ class CommandPanel extends React.Component {
             }
         }
     }
-    componentWillMount() {
+    componentDidMount() {
+        this.setState()
         fetch('/get-all-users')
         .then( res => res.json() )
         .then( data => {
             const attackablePlayers = [];
-            try {
+             try {
                 data.forEach( x => {
-                    if(x.username !== this.state.currentUser) {
+                    if(x.username !== this.state.currentPlayer.username) {
                         attackablePlayers.push(x);
-                    } else {
-                        this.setState({currentPlayer: x});
                     }
                 });
             } catch(e) {
-                throw "Troop data is null";
+                console.log("Player or troop error in fetch")
             }
 
             this.setState({attackablePlayers})
