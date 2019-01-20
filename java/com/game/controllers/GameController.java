@@ -190,7 +190,7 @@ public class GameController {
 		String profileData = Helpers.convertJsonToString( request.getInputStream() );
 		ObjectMapper objectMapper = new ObjectMapper();
 		UserProfile newProfile = objectMapper.readValue(profileData, UserProfile.class);
-		System.out.println("HERE");
+
 		new CreateUserProfile(newProfile.getUsername(), 
 				              newProfile.getPassword(),
 				              newProfile.getLastLogin(),

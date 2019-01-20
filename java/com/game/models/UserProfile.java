@@ -3,13 +3,18 @@ package com.game.models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 @Table(name="users")
+@SecondaryTable(name="authorities")
 public class UserProfile {
 //	@Id
 //	@Column(name="id")
@@ -63,6 +68,9 @@ public class UserProfile {
 	@Column(name="enabled")
 	private int enabled;
 	
+	@Column(table="authorities")
+	private String authority;
+	
 	
 	public UserProfile() {
 		
@@ -73,7 +81,7 @@ public class UserProfile {
 					   int woodLevel, int steelLevel) {
 		
 		this.username=username;
-		this.password=password;
+		this.password="{bcrypt}"+new BCryptPasswordEncoder().encode(password);
 		this.email=email;
 		this.lastLogin=lastLogin;
 		this.powerRating=powerRating;
@@ -87,8 +95,10 @@ public class UserProfile {
 		this.woodLevel = woodLevel;
 		this.steelLevel = steelLevel;
 		this.enabled = 1;
+		this.authority="ROLE_USER";
 		
 	}
+	
 
 	public String getUsername() {
 		return username;
