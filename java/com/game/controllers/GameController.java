@@ -26,6 +26,7 @@ import com.game.buildings.Building;
 import com.game.buildings.LoggingCamps;
 import com.game.buildings.SteelFoundry;
 import com.game.buildings.TaxableEconomy;
+import com.game.dto.GameDTO;
 import com.game.helpers.Helpers;
 import com.game.models.BattleUpdateProfiles;
 import com.game.models.CreateUserProfile;
@@ -112,6 +113,25 @@ public class GameController {
 			System.out.println(json.toString());
 			return json.toString();
 		}
+	}
+	
+	@GetMapping("/get-game-data")
+	@ResponseBody
+	public String getGameData(Authentication authentication) throws JsonProcessingException, JSONException {
+		if(authentication.getName() != null) { 
+			UserProfile user = new ReadUserProfile(authentication.getName()).getUserProfile();
+			GameDTO dto = new GameDTO(user);
+			ObjectMapper obj = new ObjectMapper();
+			return obj.writeValueAsString(dto);
+		}
+		else {
+			JSONObject json = new JSONObject();
+			json.put("username", "");
+			System.out.println(json.toString());
+			return json.toString();
+		}
+		
+		//return "index";
 	}
 	
 	@PostMapping("/upgrade-building")

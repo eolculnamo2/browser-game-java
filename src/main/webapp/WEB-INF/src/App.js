@@ -13,28 +13,32 @@ class App extends React.Component {
         super();
         this.state =  {
             user: {},
+            gameData: {},
             ready: false
         }
         this.DashboardAndProps=this.DashboardAndProps.bind(this);
     }
     componentDidMount() {
         try {
-        fetch("/get-user-data")
+        fetch("/get-game-data")
         .then( res => {
-            try {
+            console.log(res.status);
+            if(res.status === 200) {
                 return res.json();
-            } catch(e){
+            }
+            else {
                 this.setState({ready: true});
             }
         })
-        .then( user => {
-           this.setState({user, ready: true})
+        .then( data => {
+           this.setState({user: data.user, gameData: data, ready: true}, ()=>console.log(JSON.stringify(data,null,3)))
         });
     }   catch(e){}
     }
      DashboardAndProps (props) {
             return  <Dashboard
                         user={this.state.user}
+                        gameData={this.props.gameData}
                         {...props}
                     />
     }

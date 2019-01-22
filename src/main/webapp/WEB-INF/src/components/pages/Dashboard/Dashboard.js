@@ -13,6 +13,7 @@ class Dashboard extends React.Component {
         super();
         this.OverviewWithProps = this.OverviewWithProps.bind(this);
         this.CommandPanelWithProps = this.CommandPanelWithProps.bind(this);
+        this.TroopsWithProps = this.TroopsWithProps.bind(this);
     }
     OverviewWithProps(props) {
         return(
@@ -30,6 +31,15 @@ class Dashboard extends React.Component {
                 />
         )
     }
+    TroopsWithProps(props) {
+        return (
+            <Troops
+                user={this.props.user}
+                gameData={this.props.gameData}
+                {...props}
+            />
+        )
+    }
     render() {
         return(
             <div>
@@ -43,9 +53,7 @@ class Dashboard extends React.Component {
                     <div className="Dashboard-body">
                         <Switch>
                             {<Route exact path="/overview" render={this.OverviewWithProps}/>}
-                            {<Route exact path="/troops" render={ () => (
-                                 <Troops />
-                            )}/>}
+                            {<Route exact path="/troops" render={this.TroopsWithProps}/>}
                             {<Route exact path="/command-panel" render={this.CommandPanelWithProps}/>}
                             {<Route exact path="/resources" render={ () => (
                                  <Resources />

@@ -4,6 +4,51 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Spearmen implements Troops {
+	public int getWoodCost() {
+		return woodCost;
+	}
+
+	public void setWoodCost(int woodCost) {
+		this.woodCost = woodCost;
+	}
+
+	public int getSteelCost() {
+		return steelCost;
+	}
+
+	public void setSteelCost(int steelCost) {
+		this.steelCost = steelCost;
+	}
+
+	public int getSilverCost() {
+		return silverCost;
+	}
+
+	public void setSilverCost(int silverCost) {
+		this.silverCost = silverCost;
+	}
+
+	private int attack;
+	private int armor;
+	private int speed;
+	private int loot;
+	private double health;
+	private int battlePosition;
+	private int woodCost;
+	private int steelCost;
+	private int silverCost;
+	
+	public Spearmen() {
+		this.attack = this.getAttack();
+		this.armor = this.getArmor();
+		this.speed = this.getSpeed();
+		this.loot = this.getLoot();
+		this.health = this.getHealth();
+		this.battlePosition = this.getBattlePosition();
+		this.woodCost = Spearmen.getCost().get("wood");
+		this.steelCost = Spearmen.getCost().get("steel");
+		this.silverCost = Spearmen.getCost().get("silver");
+	}
 	
 	public int getAttack() {
 		return 1;
