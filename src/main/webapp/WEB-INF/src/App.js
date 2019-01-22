@@ -20,7 +20,13 @@ class App extends React.Component {
     componentDidMount() {
         try {
         fetch("/get-user-data")
-        .then( res => res.json())
+        .then( res => {
+            try {
+                return res.json();
+            } catch(e){
+                this.setState({ready: true});
+            }
+        })
         .then( user => {
            this.setState({user, ready: true})
         });

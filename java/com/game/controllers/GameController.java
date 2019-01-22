@@ -100,10 +100,18 @@ public class GameController {
 	
 	@GetMapping("/get-user-data")
 	@ResponseBody
-	public String getUserData(Authentication authentication) throws JsonProcessingException {
-		UserProfile user = new ReadUserProfile(authentication.getName()).getUserProfile();
-		ObjectMapper obj = new ObjectMapper();
-		return obj.writeValueAsString(user);
+	public String getUserData(Authentication authentication) throws JsonProcessingException, JSONException {
+		if(authentication.getName() != null) { 
+			UserProfile user = new ReadUserProfile(authentication.getName()).getUserProfile();
+			ObjectMapper obj = new ObjectMapper();
+			return obj.writeValueAsString(user);
+		}
+		else {
+			JSONObject json = new JSONObject();
+			json.put("username", "");
+			System.out.println(json.toString());
+			return json.toString();
+		}
 	}
 	
 	@PostMapping("/upgrade-building")

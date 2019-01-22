@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Link, Route, withRouter, Redirect, Switch } from 'react-router-dom';
+import { AccountBalance, Business, DirectionsWalk, MyLocation } from '@material-ui/icons';
 
 import './Dashboard.scss';
 import Troops from './components/Troops/Troops';
@@ -34,10 +35,10 @@ class Dashboard extends React.Component {
             <div>
                 <div className="Dashboard">
                     <ul className="Dashboard-side">
-                        <Link to="/overview"><li>Overview</li></Link>
-                        <Link to="/resources"><li>Resources</li></Link>
-                        <Link to="/troops"><li>Troops</li></Link>
-                        <Link to="/command-panel"><li>Command Panel</li></Link>
+                        <Link to="/overview"><li><AccountBalance/>&nbsp;Overview</li></Link>
+                        <Link to="/resources"><li><Business/>&nbsp;Resources</li></Link>
+                        <Link to="/troops"><li><DirectionsWalk/>&nbsp;Troops</li></Link>
+                        <Link to="/command-panel"><li><MyLocation/>&nbsp;Command&nbsp;Panel</li></Link>
                     </ul>
                     <div className="Dashboard-body">
                         <Switch>
