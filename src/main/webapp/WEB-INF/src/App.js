@@ -22,12 +22,10 @@ class App extends React.Component {
         try {
         fetch("/get-game-data")
         .then( res => {
-            console.log(res.status);
+            console.log(res);
             if(res.status === 200) {
+                //this.setState({ready: true});
                 return res.json();
-            }
-            else {
-                this.setState({ready: true});
             }
         })
         .then( data => {
@@ -38,7 +36,7 @@ class App extends React.Component {
      DashboardAndProps (props) {
             return  <Dashboard
                         user={this.state.user}
-                        gameData={this.props.gameData}
+                        gameData={this.state.gameData}
                         {...props}
                     />
     }
@@ -46,7 +44,7 @@ class App extends React.Component {
         if(this.state.ready) {
             return (
                 <div>
-                    <Header/>
+                    <Header user={this.state.user}/>
                     <Switch>
                         {/* Dashboard has nested links */}
                         <Route exact path='/' render= { this.DashboardAndProps } />

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,8 +41,10 @@ import com.game.troops.HeavySwords;
 import com.game.troops.Spearmen;
 
 @Controller
+@PropertySource("classpath:static-urls.properties")
 public class GameController {
 
+	//TODO replace with static-urls
 	@GetMapping("*")
 	public String home() {
 		return "index";
@@ -52,12 +55,6 @@ public class GameController {
 	public String currentUserName(Authentication authentication) {
 		return authentication.getName();
 	}
-	
-//	@GetMapping("/username")
-//    @ResponseBody
-//    public String currentUserName(Authentication authentication) {
-//        return authentication.getName();
-//    }
 	
 	@GetMapping("/get-all-users") 
 	@ResponseBody
@@ -99,25 +96,27 @@ public class GameController {
 		return payload.toString();
 	}
 	
-	@GetMapping("/get-user-data")
-	@ResponseBody
-	public String getUserData(Authentication authentication) throws JsonProcessingException, JSONException {
-		if(authentication.getName() != null) { 
-			UserProfile user = new ReadUserProfile(authentication.getName()).getUserProfile();
-			ObjectMapper obj = new ObjectMapper();
-			return obj.writeValueAsString(user);
-		}
-		else {
-			JSONObject json = new JSONObject();
-			json.put("username", "");
-			System.out.println(json.toString());
-			return json.toString();
-		}
-	}
+//	@GetMapping("/get-user-data")
+//	@ResponseBody
+//	public String getUserData(Authentication authentication) throws JsonProcessingException, JSONException {
+//		if(authentication.getName() != null) { 
+//			UserProfile user = new ReadUserProfile(authentication.getName()).getUserProfile();
+//			ObjectMapper obj = new ObjectMapper();
+//			return obj.writeValueAsString(user);
+//		}
+//		else {
+//			JSONObject json = new JSONObject();
+//			json.put("username", "");
+//			System.out.println(json.toString());
+//			return json.toString();
+//		}
+//	}
 	
 	@GetMapping("/get-game-data")
 	@ResponseBody
 	public String getGameData(Authentication authentication) throws JsonProcessingException, JSONException {
+		System.out.println("TEST");
+		System.out.println("TEST: "+authentication.getName());
 		if(authentication.getName() != null) { 
 			UserProfile user = new ReadUserProfile(authentication.getName()).getUserProfile();
 			GameDTO dto = new GameDTO(user);
@@ -131,7 +130,6 @@ public class GameController {
 			return json.toString();
 		}
 		
-		//return "index";
 	}
 	
 	@PostMapping("/upgrade-building")

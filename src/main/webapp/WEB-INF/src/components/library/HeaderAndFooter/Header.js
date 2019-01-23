@@ -3,25 +3,6 @@ import { BrowserRouter as Router, Link, Route, withRouter, Redirect, Switch } fr
 import './HeaderAndFooter.scss';
 
 class Header extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            username: "rbertram8",
-            wood: 0,
-            steel: 0,
-            silver: 0
-        }
-    }
-    componentDidMount() {
-        //get resources
-        const params = "?username="+this.state.username;
-        fetch("/get-user-data"+params)
-        .then( res => res.json())
-        .then( data => {
-            const { wood, steel, silver } = data;
-            this.setState({ wood, steel, silver });
-        })
-    }
     render() {
         return (
             <div>
@@ -44,9 +25,9 @@ class Header extends React.Component {
                     </div>
                 </div>
                 <div className="Header-resources">
-                    <span> <b>Wood</b> {this.state.wood}</span>
-                    <span> <b>Steel</b> {this.state.steel}</span>
-                    <span> <b>Silver</b> {this.state.silver}</span>
+                    <span> <b>Wood</b> {this.props.user.wood}</span>
+                    <span> <b>Steel</b> {this.props.user.steel}</span>
+                    <span> <b>Silver</b> {this.props.user.silver}</span>
                 </div>
             </div>
         )
